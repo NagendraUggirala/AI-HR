@@ -1,0 +1,29 @@
+{
+  "allUserData": {
+    "Jobs": {
+      "value": 20000,
+      "change": 5000,
+      "period": "last 30 days",
+      "icon": "fa-solid:users",
+      "bg-color": "bg-gradient-start-1",
+      "BgI": "bg-cyan"
+    },
+    "Applicants": {
+      "value": 15000,
+      "change": -800,
+      "period": "last 30 days",
+      "icon": "fa-solid:award",
+      "bgr": "bg-gradient-start-2",
+      "BgI": "bg-purple"
+    },
+    "Selected": {
+      "value": 5000,
+      "change": 200,
+      "period": "last 30 days",
+      "icon": "fluent:people-20-filled",
+      "bgr": "bg-gradient-start-3",
+      "BgI": "bg-info"
+    }
+    
+  }
+}
