@@ -13,7 +13,7 @@ from routers.Candidate_assessments.Assessment.communication.utils_comm import (
 from core.database import DATABASE_URL, SessionLocal as MainSessionLocal
 from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, DateTime, Text, text
 from sqlalchemy.orm import sessionmaker, declarative_base
-from models import Assignment, Assessment
+from model.models import Assignment, Assessment
 from routers.Candidate_assessments.Assessment.utils.stage_sync import update_candidate_stage_both_tables
 import datetime, json, time, os
 
@@ -22,7 +22,7 @@ engine = create_engine(DATABASE_URL, echo=True, future=True)
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 Base = declarative_base()
 
-# ---------------- Models ----------------
+# ---------------- model.models ----------------
 class ExamAttempt(Base):
     __tablename__ = "communication_assessment_results"
     id = Column(Integer, primary_key=True, index=True)
@@ -95,7 +95,7 @@ def get_base_url():
     """Get the base URL for the frontend application"""
     return os.getenv("FRONTEND_URL", "http://localhost:3000")
 
-# ---------------- Request Models ----------------
+# ---------------- Request model.models ----------------
 class OTPRequest(BaseModel):
     name: str
     email: str

@@ -8,7 +8,7 @@ from schema.ai_interview import (
 )
 from routers.Candidate_assessments.Assessment.Assessments.services import ai_interview_service
 from core.dependencies import get_current_user
-from models import User
+from model.models import User
 from typing import List
 
 

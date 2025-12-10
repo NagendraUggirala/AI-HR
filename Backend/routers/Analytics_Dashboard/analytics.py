@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from datetime import datetime, timedelta
 from typing import Optional  # ✅ required for Optional
-import models
+import model.models
 from core.database import get_db
 from .utils import parse_date_str
 
@@ -21,27 +21,27 @@ def get_kpis(
     end = parse_date_str(expiryDate)
 
     # Prepare job query with filters
-    job_query = db.query(models.Job).filter(models.Job.status.in_(["active", "Draft"]))
+    job_query = db.query(model.models.Job).filter(model.models.Job.status.in_(["active", "Draft"]))
 
     if role:
         role_clean = role.strip().lower()
-        job_query = job_query.filter(func.lower(func.trim(models.Job.role)) == role_clean)
+        job_query = job_query.filter(func.lower(func.trim(model.models.Job.role)) == role_clean)
     
     if end:
-        job_query = job_query.filter(models.Job.expiry_date <= end)
+        job_query = job_query.filter(model.models.Job.expiry_date <= end)
 
     active_jobs = job_query.count()
 
     # Prepare application query with same job filters
-    app_query = db.query(models.Application).join(models.Job)\
-        .filter(models.Job.status.in_(["active", "Draft"]))
+    app_query = db.query(model.models.Application).join(model.models.Job)\
+        .filter(model.models.Job.status.in_(["active", "Draft"]))
 
     if role:
-        app_query = app_query.filter(func.lower(func.trim(models.Job.role)) == role_clean)
+        app_query = app_query.filter(func.lower(func.trim(model.models.Job.role)) == role_clean)
     if start:
-        app_query = app_query.filter(models.Application.applied_at >= start)
+        app_query = app_query.filter(model.models.Application.applied_at >= start)
     if end:
-        app_query = app_query.filter(models.Application.applied_at <= end)
+        app_query = app_query.filter(model.models.Application.applied_at <= end)
 
     total_applications = app_query.count()
 
@@ -49,19 +49,19 @@ def get_kpis(
     week_start = datetime.utcnow() - timedelta(days=7)
     month_start = datetime(datetime.utcnow().year, datetime.utcnow().month, 1)
 
-    applications_this_week = app_query.filter(models.Application.applied_at >= week_start).count()
-    applications_this_month = app_query.filter(models.Application.applied_at >= month_start).count()
+    applications_this_week = app_query.filter(model.models.Application.applied_at >= week_start).count()
+    applications_this_month = app_query.filter(model.models.Application.applied_at >= month_start).count()
 
     # Average time to hire (in days)
     time_to_hire = db.query(
         func.avg(
-            func.extract("epoch", models.Application.hired_at - models.Application.applied_at) / 86400.0
+            func.extract("epoch", model.models.Application.hired_at - model.models.Application.applied_at) / 86400.0
         )
-    ).filter(models.Application.hired_at.isnot(None)).scalar()
+    ).filter(model.models.Application.hired_at.isnot(None)).scalar()
 
     # Applications by stage
-    stage_counts = db.query(models.Application.stage, func.count(models.Application.id))\
-        .group_by(models.Application.stage).all()
+    stage_counts = db.query(model.models.Application.stage, func.count(model.models.Application.id))\
+        .group_by(model.models.Application.stage).all()
     stage_data = {s: c for s, c in stage_counts}
 
     return {

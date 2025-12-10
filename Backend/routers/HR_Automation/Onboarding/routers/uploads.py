@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from sqlalchemy.orm import Session
 import os, shutil, uuid
-from models import Candidate, OnboardingDocument as Document, DocStatus, UPLOAD_DIR
+from model.models import Candidate, OnboardingDocument as Document, DocStatus, UPLOAD_DIR
 from core.database import SessionLocal
 
 
@@ -97,7 +97,7 @@ async def upload_documents(candidate_id: int, files: list[UploadFile] = File(...
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 import os, shutil, uuid
-from models import Candidate, Document, DocStatus, SessionLocal, UPLOAD_DIR
+from model.models import Candidate, Document, DocStatus, SessionLocal, UPLOAD_DIR
 
 router = APIRouter(prefix="/upload", tags=["Uploads"])
 

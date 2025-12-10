@@ -3,7 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 from sqlalchemy.orm import Session
 from core.database import SessionLocal
-from models import LegacyQuestion
+from model.models import LegacyQuestion
 from .config import SENDER_EMAIL, SENDER_PASSWORD, OTP_EXPIRY, PASS_THRESHOLD
 
 def generate_otp():

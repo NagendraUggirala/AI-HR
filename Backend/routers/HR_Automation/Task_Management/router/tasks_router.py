@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-import models
+import model.models
 from schema import schemas
 from core.database import get_db
 
@@ -10,7 +10,7 @@ router = APIRouter()
 # Create a new task
 @router.post("/", response_model=schemas.TaskOut)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
-    db_task = models.Task(
+    db_task = model.models.Task(
         title=task.title,
         description=task.description,
         assignee=task.assignee,
@@ -25,12 +25,12 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
 # Get all tasks
 @router.get("/", response_model=List[schemas.TaskOut])
 def get_tasks(db: Session = Depends(get_db)):
-    return db.query(models.Task).all()
+    return db.query(model.models.Task).all()
 
 # Get task by ID
 @router.get("/{task_id}", response_model=schemas.TaskOut)
 def get_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    task = db.query(model.models.Task).filter(model.models.Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
@@ -38,7 +38,7 @@ def get_task(task_id: int, db: Session = Depends(get_db)):
 # Update task
 @router.put("/{task_id}", response_model=schemas.TaskOut)
 def update_task(task_id: int, task_update: schemas.TaskUpdate, db: Session = Depends(get_db)):
-    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    task = db.query(model.models.Task).filter(model.models.Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
 
@@ -53,7 +53,7 @@ def update_task(task_id: int, task_update: schemas.TaskUpdate, db: Session = Dep
 # Delete task
 @router.delete("/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
-    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    task = db.query(model.models.Task).filter(model.models.Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     db.delete(task)
@@ -67,10 +67,10 @@ def get_progress(
     db: Session = Depends(get_db)
 ):
     if assignee:
-        tasks = db.query(models.Task).filter(models.Task.assignee == assignee).all()
+        tasks = db.query(model.models.Task).filter(model.models.Task.assignee == assignee).all()
         label = assignee
     else:
-        tasks = db.query(models.Task).all()
+        tasks = db.query(model.models.Task).all()
         label = "all"
 
     if not tasks:

@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional, Literal
 
 from core.database import get_db
-from models import User, Job
+from model.models import User, Job
 from routers.admin_users.auth import require_roles, get_password_hash
 
 router = APIRouter(prefix="/superadmin", tags=["Admin"])  # <--- Rename here

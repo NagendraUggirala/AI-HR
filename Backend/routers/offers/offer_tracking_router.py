@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from core.database import get_db
 from core.dependencies import get_current_user
-from models import User
+from model.models import User
 from .services.offer_tracking_service import (
     create_offer,
     get_offers,
@@ -26,7 +26,7 @@ from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
-from models import OfferStatus
+from model.models import OfferStatus
 
 load_dotenv()
 
@@ -153,7 +153,7 @@ def send_offer_endpoint(request: SendOfferRequest, db: Session = Depends(get_db)
     Create an offer, send it via email, and update candidate stage to 'Offered'
     """
     try:
-        from models import Candidate
+        from model.models import Candidate
         from sqlalchemy import func
         
         # Find the correct candidate_id from the main candidate table using email

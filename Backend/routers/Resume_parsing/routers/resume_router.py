@@ -5,7 +5,7 @@ from starlette.responses import JSONResponse
 from pydantic import BaseModel
 
 from core.database import SessionLocal, init_db
-from models import CandidateRecord, Candidate, Application, LegacyCandidate, Job, User
+from model.models import CandidateRecord, Candidate, Application, LegacyCandidate, Job, User
 from routers.Resume_parsing.routers.utils import extract_text, ai_extract_fields, ai_generate_jd, ai_similarity_score, send_email_smtp
 from routers.Resume_parsing.routers.config import SCORE_THRESHOLD
 from routers.Candidate_assessments.Assessment.utils.stage_sync import update_candidate_stage_all_tables

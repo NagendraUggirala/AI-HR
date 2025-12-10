@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import models
+import model.models
 from core.database import SessionLocal
 from schema import schemas
 
@@ -16,7 +16,7 @@ def get_db():
 
 @router.post("/", response_model=schemas.Notifications)
 def create_notification(notification: schemas.NotificationsCreate, db: Session = Depends(get_db)):
-    notif = models.Notifications(message=notification.message, is_read=notification.is_read)
+    notif = model.models.Notifications(message=notification.message, is_read=notification.is_read)
     db.add(notif)
     db.commit()
     db.refresh(notif)
@@ -24,11 +24,11 @@ def create_notification(notification: schemas.NotificationsCreate, db: Session =
 
 @router.get("/", response_model=list[schemas.Notifications])
 def read_notifications(db: Session = Depends(get_db)):
-    return db.query(models.Notifications).all()
+    return db.query(model.models.Notifications).all()
 
 @router.put("/{notif_id}", response_model=schemas.Notifications)
 def mark_as_read(notif_id: int, db: Session = Depends(get_db)):
-    notif = db.query(models.Notifications).filter(models.Notifications.id == notif_id).first()
+    notif = db.query(model.models.Notifications).filter(model.models.Notifications.id == notif_id).first()
     if not notif:
         raise HTTPException(status_code=404, detail="Notification not found")
     notif.is_read = 1

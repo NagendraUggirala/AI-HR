@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from core.database import get_db
-from models import LegacyCandidate as Candidate  # ✅ Use LegacyCandidate for OTP/Exam
+from model.models import LegacyCandidate as Candidate  # ✅ Use LegacyCandidate for OTP/Exam
 from ..schemas.candidate import CandidateCreate, OTPVerify
 from ..utils import generate_otp, send_email
 

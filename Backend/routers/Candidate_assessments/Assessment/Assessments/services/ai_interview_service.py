@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from models import AIInterviewTemplate  
+from model.models import AIInterviewTemplate  
 from schema.ai_interview import AIInterviewTemplateCreate, AIInterviewTemplateUpdate
 from typing import List
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, Form, Depends, HTTPException
 from sqlalchemy.orm import Session
 from core.database import get_db
-from models import OnboardingDocument as DocumentModel, OnboardingCandidate as CandidateModel
+from model.models import OnboardingDocument as DocumentModel, OnboardingCandidate as CandidateModel
 import shutil, os
 from schema.schemas import Document as DocumentSchema
 

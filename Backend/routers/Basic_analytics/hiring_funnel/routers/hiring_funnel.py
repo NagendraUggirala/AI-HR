@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil import parser
 from sqlalchemy.orm import Session
 from core.database import SessionLocal, Base, engine
-from models import Candidate
+from model.models import Candidate
 
 router = APIRouter()
 

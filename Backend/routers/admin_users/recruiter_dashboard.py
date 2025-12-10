@@ -4,7 +4,7 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 from schema import schemas
 from core.database import get_db
-from models import Job, Candidate, User, Application, CandidateRecord
+from model.models import Job, Candidate, User, Application, CandidateRecord
 from core.dependencies import require_roles
 from schema.schemas import JobCreate, JobRead, JobUpdate, CandidateRead
 

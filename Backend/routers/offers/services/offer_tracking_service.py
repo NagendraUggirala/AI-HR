@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import OfferTracking, OfferStatus, User
+from model.models import OfferTracking, OfferStatus, User
 from schema.offer_tracking import OfferTrackingCreate, OfferTrackingUpdate
 from datetime import datetime
 from typing import List, Optional

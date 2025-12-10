@@ -10,7 +10,7 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi_mail import FastMail, MessageSchema, MessageType, ConnectionConfig
 import os
 from core.database import get_db
-from models import User
+from model.models import User
 from dotenv import load_dotenv
 
 load_dotenv()

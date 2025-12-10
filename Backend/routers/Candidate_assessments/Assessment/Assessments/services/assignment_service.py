@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from schema.assignment import AssignmentCreate
-from models import Assignment, Assessment, LegacyCandidate, User, Job, Application, Candidate
+from model.models import Assignment, Assessment, LegacyCandidate, User, Job, Application, Candidate
 from sqlmodel import select
 from typing import List, Dict, Any, Optional
 

@@ -1,6 +1,6 @@
 '''from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from models import Candidate, Document, SessionLocal, init_db
+from model.models import Candidate, Document, SessionLocal, init_db
 
 router = APIRouter(prefix="/candidates", tags=["Candidates"])
 
@@ -35,7 +35,7 @@ def list_candidates(db: Session = Depends(get_db)):
     return [{"id": c.id, "name": c.name, "email": c.email} for c in candidates]'''
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from models import Candidate, OnboardingDocument as Document
+from model.models import Candidate, OnboardingDocument as Document
 from core.database import SessionLocal, engine  # <- import from your database module
 
 

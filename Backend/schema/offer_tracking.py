@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime, date
 from typing import Optional, List
-from models import OfferStatus
+from model.models import OfferStatus
 
 class OfferTrackingBase(BaseModel):
     candidate_id: int

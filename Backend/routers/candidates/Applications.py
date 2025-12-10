@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, selectinload
-import models
+import model.models
 from core.database import SessionLocal
 from schema import schemas
-from models import CandidateRecord
+from model.models import CandidateRecord
 
 router = APIRouter()
 
@@ -16,7 +16,7 @@ def get_db():
 
 @router.post("/", response_model=schemas.Applications)
 def create_application(application: schemas.ApplicationsCreate, db: Session = Depends(get_db)):
-    db_app = models.Applications(
+    db_app = model.models.Applications(
         job_title=application.job_title,
         company=application.company,
         status=application.status,
@@ -39,7 +39,7 @@ def read_applications(db: Session = Depends(get_db)):
         result = []
         
         # Query Application model (not Applications) with candidate relationship loaded
-        applications = db.query(models.Application).options(selectinload(models.Application.candidate)).all()
+        applications = db.query(model.models.Application).options(selectinload(model.models.Application.candidate)).all()
         
         # Format applications for frontend PipelineView
         for app in applications:
@@ -87,7 +87,7 @@ def read_applications(db: Session = Depends(get_db)):
         
         # Then, add/update with Candidate table records (if not already present or if stage is more advanced)
         try:
-            all_candidates = db.query(models.Candidate).all()
+            all_candidates = db.query(model.models.Candidate).all()
             for candidate in all_candidates:
                 email_lower = candidate.email.lower() if candidate.email else None
                 if email_lower:
@@ -171,13 +171,13 @@ def read_applications(db: Session = Depends(get_db)):
         traceback.print_exc()
         # Fallback to old Applications model if Application model doesn't exist
         try:
-            return db.query(models.Applications).all()
+            return db.query(model.models.Applications).all()
         except:
             return []
 
 @router.delete("/{app_id}", status_code=204)
 def delete_application(app_id: int, db: Session = Depends(get_db)):
-    app = db.query(models.Applications).filter(models.Applications.id == app_id).first()
+    app = db.query(model.models.Applications).filter(model.models.Applications.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
     db.delete(app)

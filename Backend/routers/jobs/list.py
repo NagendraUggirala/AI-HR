@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from typing import List
-from models import Job, User, Application
+from model.models import Job, User, Application
 from core.database import get_db
 from .dependencies import require_roles
 

@@ -7,7 +7,7 @@ This ensures all three tables stay in sync when stage changes occur.
 from sqlalchemy.orm import Session
 from sqlalchemy import text, func
 from sqlmodel import select
-from models import Candidate, CandidateRecord, Application
+from model.models import Candidate, CandidateRecord, Application
 
 
 def update_candidate_stage_all_tables(db: Session, email: str, new_stage: str) -> bool:

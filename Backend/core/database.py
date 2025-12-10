@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 POSTGRES_USER = "postgres"
-POSTGRES_PASSWORD = "4649"
-POSTGRES_DB = "db"
+POSTGRES_PASSWORD = "admin"
+POSTGRES_DB = "AI_HR"
 POSTGRES_HOST = "localhost"
 POSTGRES_PORT = "5432"
 

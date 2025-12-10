@@ -3,7 +3,7 @@ Service to fetch all assessment results directly from result tables
 """
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from models import LegacyCandidate, User, Job, Application
+from model.models import LegacyCandidate, User, Job, Application
 from sqlmodel import select
 from typing import List, Dict, Any, Optional
 
@@ -32,7 +32,7 @@ def get_all_assessment_results(db: Session, user: Optional[User] = None) -> List
                     recruiter_candidate_emails.add(app.candidate_email.lower().strip())
             candidate_ids = list(set([app.candidate_id for app in applications if app.candidate_id]))
             if candidate_ids:
-                from models import Candidate
+                from model.models import Candidate
                 candidates = db.exec(select(Candidate).where(Candidate.id.in_(candidate_ids))).all()
                 for candidate in candidates:
                     if candidate.email:

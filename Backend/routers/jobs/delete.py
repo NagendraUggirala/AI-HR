@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from models import Job, User
+from model.models import Job, User
 from core.database import get_db
 from .dependencies import require_roles
 

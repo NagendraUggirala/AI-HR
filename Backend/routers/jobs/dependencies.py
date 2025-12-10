@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException
 from typing import List
-from models import User
+from model.models import User
 from routers.admin_users.auth import get_current_user
 
 def require_roles(allowed_roles: List[str]):

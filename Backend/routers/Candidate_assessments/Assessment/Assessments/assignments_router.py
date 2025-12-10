@@ -5,7 +5,7 @@ from schema.assignment import AssignmentCreate, AssignmentOut
 from routers.Candidate_assessments.Assessment.Assessments.services import assignment_service
 from routers.Candidate_assessments.Assessment.Assessments.services.results_service import get_all_assessment_results
 from core.dependencies import get_current_user
-from models import User
+from model.models import User
 from typing import List, Dict, Any
 
 router = APIRouter(prefix="/assignments", tags=["Assignments"])

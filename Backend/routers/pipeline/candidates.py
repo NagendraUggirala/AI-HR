@@ -1,11 +1,11 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import models
+import model.models
 from core.database import get_db
 from schema import schemas
 from core.dependencies import get_current_user
-from models import User, Job, Application
+from model.models import User, Job, Application
 from sqlmodel import select
 
 
@@ -31,15 +31,15 @@ def list_candidates(db: Session = Depends(get_db), user: User = Depends(get_curr
         return []
     
     # Get candidates for these IDs
-    return db.query(models.Candidate).filter(models.Candidate.id.in_(candidate_ids)).all()
+    return db.query(model.models.Candidate).filter(model.models.Candidate.id.in_(candidate_ids)).all()
 
 
 @router.post("/", response_model=schemas.CandidateOut, status_code=201)
 def create_candidate(payload: schemas.CandidateCreate, db: Session = Depends(get_db)):
-    stage = db.get(models.Stage, payload.stage_id)
+    stage = db.get(model.models.Stage, payload.stage_id)
     if not stage:
         raise HTTPException(status_code=400, detail="Invalid stage_id")
-    candidate = models.Candidate(
+    candidate = model.models.Candidate(
         name=payload.name,
         role=payload.role,
         status=payload.status,
@@ -53,11 +53,11 @@ def create_candidate(payload: schemas.CandidateCreate, db: Session = Depends(get
 
 @router.patch("/{candidate_id}", response_model=schemas.CandidateOut)
 def update_candidate(candidate_id: int, payload: schemas.CandidateUpdate, db: Session = Depends(get_db)):
-    candidate = db.get(models.Candidate, candidate_id)
+    candidate = db.get(model.models.Candidate, candidate_id)
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
     if payload.stage_id is not None:
-        stage = db.get(models.Stage, payload.stage_id)
+        stage = db.get(model.models.Stage, payload.stage_id)
         if not stage:
             raise HTTPException(status_code=400, detail="Invalid stage_id")
         candidate.stage_id = payload.stage_id
@@ -74,7 +74,7 @@ def update_candidate(candidate_id: int, payload: schemas.CandidateUpdate, db: Se
 
 @router.delete("/{candidate_id}", status_code=204)
 def delete_candidate(candidate_id: int, db: Session = Depends(get_db)):
-    candidate = db.get(models.Candidate, candidate_id)
+    candidate = db.get(model.models.Candidate, candidate_id)
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
     db.delete(candidate)

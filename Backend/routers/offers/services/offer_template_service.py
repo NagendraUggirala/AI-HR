@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import OfferTemplate, User
+from model.models import OfferTemplate, User
 from schema.offer_template import OfferTemplateCreate, OfferTemplateUpdate
 from datetime import datetime
 from typing import List, Optional

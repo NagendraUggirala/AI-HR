@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
 from jose import jwt, JWTError
 from core.database import get_db
-from models import User
+from model.models import User
 from typing import List
 
 # --- JWT settings (reuse same as in auth router) ---

@@ -6,7 +6,7 @@ Provides endpoints to fetch test results from the aptitude_assessment_results ta
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from core.database import get_db
-from models import LegacyCandidate as Candidate, User, Job, Application
+from model.models import LegacyCandidate as Candidate, User, Job, Application
 from core.dependencies import get_current_user
 from sqlmodel import select
 from typing import List, Optional
@@ -34,7 +34,7 @@ def get_all_results(db: Session = Depends(get_db), user: User = Depends(get_curr
             # Also get emails from Candidate table
             candidate_ids = list(set([app.candidate_id for app in applications if app.candidate_id]))
             if candidate_ids:
-                from models import Candidate as CandidateModel
+                from model.models import Candidate as CandidateModel
                 candidates = db.exec(select(CandidateModel).where(CandidateModel.id.in_(candidate_ids))).all()
                 for candidate in candidates:
                     if candidate.email:
@@ -121,7 +121,7 @@ def get_statistics(db: Session = Depends(get_db), user: User = Depends(get_curre
                     recruiter_candidate_emails.add(app.candidate_email.lower().strip())
             candidate_ids = list(set([app.candidate_id for app in applications if app.candidate_id]))
             if candidate_ids:
-                from models import Candidate as CandidateModel
+                from model.models import Candidate as CandidateModel
                 candidates = db.exec(select(CandidateModel).where(CandidateModel.id.in_(candidate_ids))).all()
                 for candidate in candidates:
                     if candidate.email:

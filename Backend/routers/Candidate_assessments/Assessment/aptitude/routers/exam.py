@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from urllib.parse import quote_plus
 from core.database import get_db
-from models import LegacyQuestion as Question
-from models import LegacyCandidate as Candidate
-from models import Assignment, Assessment
+from model.models import LegacyQuestion as Question
+from model.models import LegacyCandidate as Candidate
+from model.models import Assignment, Assessment
 from ..schemas.exam import ExamStartRequest, SubmitExam
 from ..schemas.candidate import CandidateCreate, OTPVerify
 from ..utils import generate_otp, send_email, assign_questions

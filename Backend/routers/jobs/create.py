@@ -1,7 +1,7 @@
 import json
 from fastapi import APIRouter, UploadFile, Form, Depends, HTTPException
 from sqlmodel import Session
-from models import Job, User
+from model.models import Job, User
 from .schemas import JobRead
 from routers.admin_users.auth import require_roles, get_current_user
 from core.database import get_db

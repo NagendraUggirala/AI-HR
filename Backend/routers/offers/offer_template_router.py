@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from core.database import get_db
 from core.dependencies import get_current_user
-from models import User
+from model.models import User
 from .services.offer_template_service import (
     create_offer_template,
     get_offer_templates,

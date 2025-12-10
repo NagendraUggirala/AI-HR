@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import models
+import model.models
 from core.database import SessionLocal
 from schema import schemas
 
@@ -16,17 +16,17 @@ def get_db():
 
 @router.get("/", response_model=schemas.Profile)
 def read_profile(db: Session = Depends(get_db)):
-    profile = db.query(models.Profile).first()
+    profile = db.query(model.models.Profile).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
     return profile
 
 @router.post("/", response_model=schemas.Profile)
 def create_profile(profile: schemas.Profile, db: Session = Depends(get_db)):
-    existing = db.query(models.Profile).first()
+    existing = db.query(model.models.Profile).first()
     if existing:
         raise HTTPException(status_code=400, detail="Profile already exists")
-    db_profile = models.Profile(
+    db_profile = model.models.Profile(
         name=profile.name,
         role=profile.role,
         profile_image_url=profile.profile_image_url

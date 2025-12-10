@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, Form, Depends, HTTPException
 from sqlalchemy.orm import Session
 import shutil, os
 from core.database import get_db
-from models import Signature
+from model.models import Signature
 
 router = APIRouter(prefix="/signatures")
 

@@ -1,7 +1,7 @@
 # backend/services/assessment_service.py
 from sqlalchemy.orm import Session
 from schema.assessment import AssessmentCreate   # absolute import
-from models import Assessment, User
+from model.models import Assessment, User
 from typing import Optional
  # instead of 'app.schemas.assessment'
 

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text, func
 from core.database import get_db, engine
 from core.dependencies import get_current_user
-from models import Question, Answer, InterviewCandidate, AIInterviewTemplate, User, Job, Application, Candidate
+from model.models import Question, Answer, InterviewCandidate, AIInterviewTemplate, User, Job, Application, Candidate
 from sqlmodel import select
 from ..utils.ai_analysis import score_answer
 from ..utils.email_utils import generate_otp, send_otp
@@ -106,7 +106,7 @@ def ensure_answer_columns():
 # Run migration on module load
 ensure_answer_columns()
 
-# Pydantic models for request bodies
+# Pydantic model.models for request bodies
 class OTPRequest(BaseModel):
     email: EmailStr
     name: str
